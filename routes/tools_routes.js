@@ -55,7 +55,12 @@ async function matchingCards(filter) {
 }
 
 /* This is a Bayesian adjustment to the rating like IMDB does. */
-const adjust = (r) => (r.picks * r.value + MIN_PICKS * 0.5) / (r.picks + MIN_PICKS);
+const adjust = (r) => {
+  if (!r) {
+    return 0;
+  }
+  return (r.picks * r.value + MIN_PICKS * 0.5) / (r.picks + MIN_PICKS);
+};
 
 async function topCards(filter) {
   const cards = await matchingCards(filter);
